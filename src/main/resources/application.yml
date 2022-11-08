@@ -1,0 +1,47 @@
+server:
+  error:
+    whitelabel:
+      enabled: false
+
+spring:
+  application:
+    name: company
+  main:
+    lazy-initialization: false
+    banner-mode: "off"
+    allow-bean-definition-overriding: true
+  jpa:
+    properties:
+      javax:
+        persistence:
+          sharedCache:
+            mode: ENABLE_SELECTIVE
+      hibernate:
+        javax:
+          cache:
+            missing_cache_strategy: create
+        cache:
+          use_second_level_cache: true
+          use_query_cache: true
+          region:
+            factory_class: org.hibernate.cache.jcache.JCacheRegionFactory
+
+  datasource:
+    url: jdbc:postgresql://${io.github.paulushcgcj.database.host}/${io.github.paulushcgcj.database.name}
+    username: ${io.github.paulushcgcj.database.username}
+    password: ${io.github.paulushcgcj.database.password}
+  flyway:
+    locations: classpath:db/migration
+    enabled: true
+    validate-on-migrate: true
+    user: ${io.github.paulushcgcj.database.username}
+    password: ${io.github.paulushcgcj.database.password}
+    url: jdbc:postgresql://${io.github.paulushcgcj.database.host}/${io.github.paulushcgcj.database.name}
+
+springdoc:
+  webjars:
+    prefix: /v3
+  api-docs:
+    groups:
+      enabled: true
+  show-actuator: true
