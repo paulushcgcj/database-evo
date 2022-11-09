@@ -24,7 +24,75 @@ spring:
           use_second_level_cache: true
           use_query_cache: true
           region:
-            factory_class: org.hibernate.cache.jcache.JCacheRegionFactory
+            factory_class: org.redisson.hibernate.RedissonRegionFactory
+          redisson:
+            fallback: true
+            config: redisson.yaml
+            entity:
+              eviction:
+                max_entries: 10000
+              expiration:
+                time_to_live: 600000
+                max_idle_time: 300000
+              localcache:
+                max_idle_time: 300000
+                time_to_live: 300000
+                eviction_policy: LRU
+                sync_strategy: INVALIDATE
+                reconnection_strategy: CLEAR
+                size: 5000
+            collection:
+              eviction:
+                max_entries: 10000
+              expiration:
+                time_to_live: 600000
+                max_idle_time: 300000
+              localcache:
+                max_idle_time: 300000
+                time_to_live: 300000
+                eviction_policy: LRU
+                sync_strategy: INVALIDATE
+                reconnection_strategy: CLEAR
+                size: 5000
+            naturalid:
+              eviction:
+                max_entries: 10000
+              expiration:
+                time_to_live: 600000
+                max_idle_time: 300000
+              localcache:
+                max_idle_time: 300000
+                time_to_live: 300000
+                eviction_policy: LRU
+                sync_strategy: INVALIDATE
+                reconnection_strategy: CLEAR
+                size: 5000
+            query:
+              eviction:
+                max_entries: 10000
+              expiration:
+                time_to_live: 600000
+                max_idle_time: 300000
+              localcache:
+                max_idle_time: 300000
+                time_to_live: 300000
+                eviction_policy: LRU
+                sync_strategy: INVALIDATE
+                reconnection_strategy: CLEAR
+                size: 5000
+            timestamps:
+              eviction:
+                max_entries: 10000
+              expiration:
+                time_to_live: 600000
+                max_idle_time: 300000
+              localcache:
+                max_idle_time: 300000
+                time_to_live: 300000
+                eviction_policy: LRU
+                sync_strategy: INVALIDATE
+                reconnection_strategy: CLEAR
+                size: 5000
 
   datasource:
     url: jdbc:postgresql://${io.github.paulushcgcj.database.host}/${io.github.paulushcgcj.database.name}
