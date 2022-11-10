@@ -5,7 +5,7 @@ server:
 
 spring:
   application:
-    name: company
+    name: databaseevo
   main:
     lazy-initialization: false
     banner-mode: "off"
@@ -105,11 +105,3 @@ spring:
     user: ${io.github.paulushcgcj.database.username}
     password: ${io.github.paulushcgcj.database.password}
     url: jdbc:postgresql://${io.github.paulushcgcj.database.host}/${io.github.paulushcgcj.database.name}
-
-springdoc:
-  webjars:
-    prefix: /v3
-  api-docs:
-    groups:
-      enabled: true
-  show-actuator: true

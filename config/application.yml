@@ -6,3 +6,11 @@ io:
         host: 127.0.0.1:5432
         username: simple
         password: root
+        external:
+          jdbcUrl: jdbc:postgresql://${io.github.paulushcgcj.database.host}/external
+          username: ${io.github.paulushcgcj.database.username}
+          password: ${io.github.paulushcgcj.database.password}
+        central:
+          jdbcUrl: jdbc:postgresql://${io.github.paulushcgcj.database.host}/${io.github.paulushcgcj.database.name}
+          username: ${io.github.paulushcgcj.database.username}
+          password: ${io.github.paulushcgcj.database.password}
