@@ -7,6 +7,11 @@ import io.github.paulushcgcj.exceptions.CompanyPersistenceException;
 import io.github.paulushcgcj.exceptions.NullCompanyException;
 import io.github.paulushcgcj.repositories.users.PersonRepository;
 import io.github.paulushcgcj.validators.PersonValidator;
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.stream.Collectors;
+import javax.transaction.Transactional;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,19 +24,12 @@ import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 
-import javax.transaction.Transactional;
-import java.util.List;
-import java.util.Optional;
-import java.util.function.Consumer;
-import java.util.stream.Collectors;
-
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class PersonService {
 
-  @Getter
-  private final PersonRepository personRepository;
+  @Getter private final PersonRepository personRepository;
 
   @Getter private final PersonValidator validator;
 
@@ -40,13 +38,11 @@ public class PersonService {
 
     Page<Person> personPage = null;
 
-    if(StringUtils.isNotBlank(name))
+    if (StringUtils.isNotBlank(name))
       personPage = personRepository.findAllByName(name, PageRequest.of((int) page, (int) size));
-    else
-      personPage = personRepository.findAll(PageRequest.of((int) page, (int) size));
+    else personPage = personRepository.findAll(PageRequest.of((int) page, (int) size));
 
-    return personPage
-        .stream()
+    return personPage.stream()
         .peek(companies -> log.info("{} persons found", companies))
         .collect(Collectors.toList());
   }
@@ -55,7 +51,7 @@ public class PersonService {
   public String addPerson(Person person) {
     log.info("Adding person {}", person);
     if (person != null) {
-      if(listPersons(0, 1, person.getName()).isEmpty()) {
+      if (listPersons(0, 1, person.getName()).isEmpty()) {
         String id = savePerson(person.withNewData(true));
         log.info("Person added with ID {}", person);
         return id;
@@ -67,30 +63,23 @@ public class PersonService {
 
   public Person getPerson(String id) {
     log.info("Searching for person with id {}", id);
-    return personRepository
-        .findById(id)
-        .orElseThrow(() -> new CompanyNotFoundException(id));
+    return personRepository.findById(id).orElseThrow(() -> new CompanyNotFoundException(id));
   }
 
   @Transactional
   public void updatePerson(String id, Person person) {
     log.info("Updating person with ID {} to {}", id, person);
     if (person != null) {
-      Optional
-          .ofNullable(getPerson(id))
-          .map(person1 -> savePerson(person.withId(id)));
+      Optional.ofNullable(getPerson(id)).map(person1 -> savePerson(person.withId(id)));
       return;
     }
     throw new NullCompanyException();
   }
 
-
   @Transactional
   public void removePerson(String id) {
     log.info("Removing person with id {}", id);
-    Optional
-        .ofNullable(getPerson(id))
-        .ifPresent(company -> personRepository.deleteById(id));
+    Optional.ofNullable(getPerson(id)).ifPresent(company -> personRepository.deleteById(id));
   }
 
   private String savePerson(Person person) {
@@ -98,27 +87,21 @@ public class PersonService {
     Errors errors = new BeanPropertyBindingResult(person, Person.class.getName());
     validator.validate(person, errors);
 
-    if (!errors.hasErrors())
-      return personRepository
-          .save(person)
-          .getId();
+    if (!errors.hasErrors()) return personRepository.save(person).getId();
 
-    return errors
-        .getAllErrors()
-        .stream()
+    return errors.getAllErrors().stream()
         .map(FieldError.class::cast)
         .map(DefaultMessageSourceResolvable::getCode)
         .reduce((m1, m2) -> String.join(",", new String[] {m1, m2}))
-        .map(v -> {
-          if(StringUtils.isNotBlank(v))
-            throw new CompanyPersistenceException(v);
-          return v;
-        })
+        .map(
+            v -> {
+              if (StringUtils.isNotBlank(v)) throw new CompanyPersistenceException(v);
+              return v;
+            })
         .orElseThrow(() -> new CompanyPersistenceException(""));
   }
 
   private static <T> Consumer<T> logger() {
     return content -> log.info("{}", content);
   }
-
 }
