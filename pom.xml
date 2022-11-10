@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>io.github.paulushcgcj</groupId>
 	<artifactId>db-evo</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.4</version>
 	<name>Database Evolution</name>
 	<description>Demo for database evolution, testing out L2 cache, multiple datasources and reactive</description>
 	<properties>
