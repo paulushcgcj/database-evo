@@ -240,7 +240,7 @@ jobs:
         run: mvn versions:commit
 
       - name: Updating Compose version
-        run: sed -i -E "s/SIMPLEWEBFLUX=.*/SIMPLEWEBFLUX=${{ steps.changelog.outputs.version }}/g" docs/environment/.env
+        run: sed -i -E "s/DBEVO=.*/DBEVO=${{ steps.changelog.outputs.version }}/g" docs/environment/.env
 
       - name: Merging Changelog
         run: |
