@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>io.github.paulushcgcj</groupId>
-	<artifactId>db-cache</artifactId>
+	<artifactId>db-evo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>db-cache</name>
-	<description>Demo for Level 2 Cache on Database</description>
+	<name>Database Evolution</name>
+	<description>Demo for database evolution, testing out L2 cache, multiple datasources and reactive</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
@@ -41,6 +41,10 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+		</dependency>
 
 
 		<dependency>
@@ -49,16 +53,6 @@
 			<version>3.17.7</version>
 		</dependency>
 
-		<!--<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-jcache</artifactId>
-			<version>6.1.5.Final</version>
-		</dependency>-->
-		<!--<dependency>
-			<groupId>org.ehcache</groupId>
-			<artifactId>ehcache</artifactId>
-			<scope>runtime</scope>
-		</dependency>-->
 
 		<dependency>
 			<groupId>org.postgresql</groupId>
