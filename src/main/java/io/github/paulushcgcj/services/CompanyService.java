@@ -1,11 +1,11 @@
 package io.github.paulushcgcj.services;
 
-import io.github.paulushcgcj.entities.Company;
+import io.github.paulushcgcj.entities.companies.Company;
 import io.github.paulushcgcj.exceptions.CompanyAlreadyExistException;
 import io.github.paulushcgcj.exceptions.CompanyNotFoundException;
 import io.github.paulushcgcj.exceptions.CompanyPersistenceException;
 import io.github.paulushcgcj.exceptions.NullCompanyException;
-import io.github.paulushcgcj.repositories.CompanyRepository;
+import io.github.paulushcgcj.repositories.companies.CompanyRepository;
 import io.github.paulushcgcj.validators.CompanyValidator;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

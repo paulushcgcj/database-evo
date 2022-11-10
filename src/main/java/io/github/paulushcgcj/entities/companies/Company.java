@@ -1,5 +1,5 @@
 
-package io.github.paulushcgcj.entities;
+package io.github.paulushcgcj.entities.companies;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

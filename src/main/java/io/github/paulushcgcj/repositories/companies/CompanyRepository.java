@@ -1,7 +1,7 @@
-package io.github.paulushcgcj.repositories;
+package io.github.paulushcgcj.repositories.companies;
 
 
-import io.github.paulushcgcj.entities.Company;
+import io.github.paulushcgcj.entities.companies.Company;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.QueryHints;
@@ -12,5 +12,5 @@ import javax.persistence.QueryHint;
 public interface CompanyRepository extends PagingAndSortingRepository<Company, String> {
 
   @QueryHints(@QueryHint(name = org.hibernate.annotations.QueryHints.CACHEABLE, value = "true"))
-  Page<Company> findAllByName(String name,Pageable pageable);
+  Page<Company> findAllByName(String name, Pageable pageable);
 }

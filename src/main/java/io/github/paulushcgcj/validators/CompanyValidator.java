@@ -1,6 +1,6 @@
 package io.github.paulushcgcj.validators;
 
-import io.github.paulushcgcj.entities.Company;
+import io.github.paulushcgcj.entities.companies.Company;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;

@@ -1,6 +1,6 @@
 package io.github.paulushcgcj.endpoints;
 
-import io.github.paulushcgcj.entities.Company;
+import io.github.paulushcgcj.entities.companies.Company;
 import io.github.paulushcgcj.services.CompanyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -41,7 +41,7 @@ public class CompanyController {
   @PutMapping("/{id}")
   @ResponseStatus(HttpStatus.ACCEPTED)
   public void updateCompany(@PathVariable String id,@RequestBody Company company){
-    service.updateCompany(id,company);
+    service.updateCompany(id, company);
   }
 
   @DeleteMapping("/{id}")
