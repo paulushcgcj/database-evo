@@ -7,6 +7,12 @@ import io.github.paulushcgcj.exceptions.CompanyPersistenceException;
 import io.github.paulushcgcj.exceptions.NullCompanyException;
 import io.github.paulushcgcj.repositories.companies.CompanyRepository;
 import io.github.paulushcgcj.validators.CompanyValidator;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.function.Consumer;
+import java.util.stream.Collectors;
+import javax.transaction.Transactional;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,13 +24,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
-
-import javax.transaction.Transactional;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -40,13 +39,11 @@ public class CompanyService {
 
     Page<Company> companyPage = null;
 
-    if(StringUtils.isNotBlank(name))
-      companyPage = companyRepository.findAllByName(name,PageRequest.of((int) page, (int) size));
-    else
-      companyPage = companyRepository.findAll(PageRequest.of((int) page, (int) size));
+    if (StringUtils.isNotBlank(name))
+      companyPage = companyRepository.findAllByName(name, PageRequest.of((int) page, (int) size));
+    else companyPage = companyRepository.findAll(PageRequest.of((int) page, (int) size));
 
-    return companyPage
-        .stream()
+    return companyPage.stream()
         .peek(companies -> log.info("{} companies found", companies))
         .collect(Collectors.toList());
   }
@@ -55,7 +52,7 @@ public class CompanyService {
   public String addCompany(Company company) {
     log.info("Adding company {}", company);
     if (company != null) {
-      if(listCompanies(0, 1, company.getName()).isEmpty()) {
+      if (listCompanies(0, 1, company.getName()).isEmpty()) {
         String id = saveCompany(company.withId(UUID.randomUUID().toString()).withNewData(true));
         log.info("Company added with ID {}", company);
         return id;
@@ -67,30 +64,23 @@ public class CompanyService {
 
   public Company getCompany(String id) {
     log.info("Searching for company with id {}", id);
-    return companyRepository
-        .findById(id)
-        .orElseThrow(() -> new CompanyNotFoundException(id));
+    return companyRepository.findById(id).orElseThrow(() -> new CompanyNotFoundException(id));
   }
 
   @Transactional
   public void updateCompany(String id, Company company) {
     log.info("Updating company with ID {} to {}", id, company);
     if (company != null) {
-      Optional
-          .ofNullable(getCompany(id))
-          .map(company1 -> saveCompany(company.withId(id)));
+      Optional.ofNullable(getCompany(id)).map(company1 -> saveCompany(company.withId(id)));
       return;
     }
     throw new NullCompanyException();
   }
 
-
   @Transactional
   public void removeCompany(String id) {
     log.info("Removing company with id {}", id);
-    Optional
-        .ofNullable(getCompany(id))
-        .ifPresent(company -> companyRepository.deleteById(id));
+    Optional.ofNullable(getCompany(id)).ifPresent(company -> companyRepository.deleteById(id));
   }
 
   private String saveCompany(Company company) {
@@ -98,22 +88,17 @@ public class CompanyService {
     Errors errors = new BeanPropertyBindingResult(company, Company.class.getName());
     validator.validate(company, errors);
 
-    if (!errors.hasErrors())
-      return companyRepository
-          .save(company)
-          .getId();
+    if (!errors.hasErrors()) return companyRepository.save(company).getId();
 
-    return errors
-        .getAllErrors()
-        .stream()
+    return errors.getAllErrors().stream()
         .map(FieldError.class::cast)
         .map(DefaultMessageSourceResolvable::getCode)
         .reduce((m1, m2) -> String.join(",", new String[] {m1, m2}))
-        .map(v -> {
-          if(StringUtils.isNotBlank(v))
-            throw new CompanyPersistenceException(v);
-          return v;
-        })
+        .map(
+            v -> {
+              if (StringUtils.isNotBlank(v)) throw new CompanyPersistenceException(v);
+              return v;
+            })
         .orElseThrow(() -> new CompanyPersistenceException(""));
   }
 
