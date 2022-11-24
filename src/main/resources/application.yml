@@ -98,10 +98,11 @@ spring:
     url: jdbc:postgresql://${io.github.paulushcgcj.database.host}/${io.github.paulushcgcj.database.name}
     username: ${io.github.paulushcgcj.database.username}
     password: ${io.github.paulushcgcj.database.password}
-  flyway:
-    locations: classpath:db/migration
-    enabled: true
-    validate-on-migrate: true
-    user: ${io.github.paulushcgcj.database.username}
-    password: ${io.github.paulushcgcj.database.password}
-    url: jdbc:postgresql://${io.github.paulushcgcj.database.host}/${io.github.paulushcgcj.database.name}
+    hikari:
+      connectionTimeout: 90000
+      idleTimeout: 45000
+      maxLifetime: 60000
+      keepaliveTime: 30000
+      poolName: SimpleCachePool
+      minimumIdle: 1
+      maximumPoolSize: 3
