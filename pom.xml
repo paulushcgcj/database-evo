@@ -79,7 +79,7 @@
 		<dependency>
 			<groupId>org.redisson</groupId>
 			<artifactId>redisson-hibernate-53</artifactId>
-			<version>3.21.1</version>
+			<version>3.21.3</version>
 		</dependency>
 
 
