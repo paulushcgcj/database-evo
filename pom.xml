@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.0.6</version>
+		<version>3.1.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>io.github.paulushcgcj</groupId>
@@ -38,7 +38,7 @@
 		<maven.build.timestamp.format>yyyy-MM-dd HH:mm:ss</maven.build.timestamp.format>
 
 		<spring-cloud.version>2021.0.4</spring-cloud.version>
-		<testcontainers.version>1.18.1</testcontainers.version>
+		<testcontainers.version>1.18.3</testcontainers.version>
 		<cucumber.version>7.8.1</cucumber.version>
 		<jjwt.version>0.11.5</jjwt.version>
 		<junit-jupiter-api.version>5.9.0</junit-jupiter-api.version>
@@ -79,7 +79,7 @@
 		<dependency>
 			<groupId>org.redisson</groupId>
 			<artifactId>redisson-hibernate-53</artifactId>
-			<version>3.21.2</version>
+			<version>3.22.0</version>
 		</dependency>
 
 
@@ -328,7 +328,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
-				<version>3.2.2</version>
+				<version>3.3.0</version>
 				<configuration>
 					<skip>${checkstyle.skip}</skip>
 					<configLocation>google_checks.xml</configLocation>
@@ -369,7 +369,7 @@
 			<plugin>
 				<groupId>org.cyclonedx</groupId>
 				<artifactId>cyclonedx-maven-plugin</artifactId>
-				<version>2.7.8</version>
+				<version>2.7.9</version>
 				<executions>
 					<execution>
 						<phase>validate</phase>
