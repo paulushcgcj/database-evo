@@ -26,12 +26,12 @@ public class ErrorHandlingController extends ResponseEntityExceptionHandler {
 
     log.error("Received an exception from the application {}", ex.getMessage(), ex);
 
-    if (ex instanceof ResponseStatusException) {
+    if (ex instanceof ResponseStatusException exception) {
       return handleExceptionInternal(
-          ex,
-          ((ResponseStatusException) ex).getReason(),
+          exception,
+          exception.getReason(),
           new HttpHeaders(),
-          ((ResponseStatusException) ex).getStatus(),
+          exception.getStatusCode(),
           request);
     }
 
@@ -39,7 +39,6 @@ public class ErrorHandlingController extends ResponseEntityExceptionHandler {
         ex, ex.getMessage(), new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
   }
 
-  @Override
   protected ResponseEntity<Object> handleMethodArgumentNotValid(
       MethodArgumentNotValidException ex,
       HttpHeaders headers,

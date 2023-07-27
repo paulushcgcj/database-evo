@@ -2,9 +2,9 @@ package io.github.paulushcgcj.endpoints;
 
 import io.github.paulushcgcj.entities.companies.Company;
 import io.github.paulushcgcj.services.CompanyService;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import java.util.List;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
