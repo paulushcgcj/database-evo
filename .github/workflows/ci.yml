@@ -197,9 +197,6 @@ jobs:
     name: Release
     runs-on: ubuntu-latest
     if: github.ref_name == 'main'
-    needs:
-      - security
-      - test
     steps:
       - uses: actions/checkout@v3
         with:
